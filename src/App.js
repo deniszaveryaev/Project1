@@ -104,15 +104,9 @@ function DogBreedSelect() {
             CATS
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home" style={{ display: "none" }}>
-              Home
-            </Nav.Link>
-            <Nav.Link href="#features" style={{ display: "none" }}>
-              Features
-            </Nav.Link>
-            <Nav.Link href="#pricing" style={{ display: "none" }}>
-              Pricing
-            </Nav.Link>
+            <Nav.Link href="#home">Disable</Nav.Link>
+            <Nav.Link href="#features">Disable</Nav.Link>
+            <Nav.Link href="#pricing">Disable</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
