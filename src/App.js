@@ -13,7 +13,6 @@ const apiKey = "qY4GHy6WYQEXFRfJuPLBnmc2p5cvoQwYpYNO160g";
 function DogBreedSelect() {
   const [breeds, setBreeds] = useState([]); // breeds - Массив,
   // который будет хранить информацию о всех доступных породах собак.
-  console.log("breeds = ", breeds);
   const [breedsImages, setBreedsImages] = useState([]); // breedsImages - массив, который
   // будет хранить адреса всех ихображений
   const [names, setNames] = useState([]); // names - массив имён картинок
@@ -31,12 +30,8 @@ function DogBreedSelect() {
         // Создаём  ОБЪЕКТ "responce"( к которого есть СВОЙСТВА и МЕТОДЫ ), который представляет собой HTTP-ответ на запрос,
         // выполненный с помощью функции fetch
         const response = await fetch("https://api.thecatapi.com/v1/breeds");
-        console.log("response=", response);
-        console.log("response.URL=", response.url); // response.URL url - метод
-        console.log("response.JSON=", response.json); // json - метод, который возвращает промис,
         // объект, полученный из JSON-ответа.
         const data = await response.json(); // Преобразуем ответ в JSON формат
-        console.log("data=", data);
         setBreeds(data); //Об новляем   состояние массива  breeds полученными данными
       } catch (error) {
         console.error("Ошибка при получении данных:", error);
@@ -53,38 +48,28 @@ function DogBreedSelect() {
     if (selectedName === "Choose cat's breed") {
       return;
     }
-    console.log("selectedName=", selectedName);
     // ПОИСК ОБЪЕКТОВ ПОРОД ПО ИМЕНИ
     // breeds — это МАССИВ ОБЪЕКТОВ пород, который был получен из API ранее.
     // find — это МЕТОД массива, который ищет первый элемент, удовлетворяющий условию.
     // breed.name === selectedName — это условие, которое проверяет, совпадает ли имя породы с выбранным именем.
     const breedObj = breeds.find((breed) => breed.name === selectedName);
-    console.log("breedObj.description=", breedObj.description);
-    console.log("breedObj.id=", breedObj.id);
-    console.log("breedObj=", breedObj);
     // по ID породы запрашиваем картинки по выбранной  из API
     const responseImg = await fetch(
       `https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breedObj.id}&api_key=${apiKey}`
     );
-    console.log("responseImg=", responseImg);
     const dataImg = await responseImg.json(); // данные JSON объектов - картинок
-    console.log("dataImg=", dataImg);
     setBreedsImages(dataImg); // это функция, которая обновляет состояние breedsImages с полученными изображениями.
     const responseNames = await fetch(
       `https://randomuser.me/api/?results=${dataImg.length}`
     );
-    console.log("responseNames=", responseNames);
+
     const dataNames = await responseNames.json();
-    console.log("dataNames=", dataNames);
     setNames(dataNames.results); // — это функция, которая обновляет состояние МАССИВА names  полученными именами.
-    console.log("dataNames.results=", dataNames.results);
-    console.log("SelectedName before setSelectedName=", selectedName);
     // NEW! Сбрасываем выбранное имя при выборе новой породы
     // setSelectedName(null);
     // NEW!! Обновляем состояние breedDescription в функции onSelectChanged:
     setBreedDescription(breedObj.description); // Обновляем описание породы
     setSelectedName(null);
-    console.log("SelectedName after setSelectedName=", selectedName);
   };
   // setSelectedName(null);
   // NEW! ВВОДИМ НОВУЮ ФУНКЦИЮ - ОБРАБАТЫВАЕМ СОБЫТИЕ ИЗМЕНЕНИЯ ВЫБОРА ИМЕНИ КОШКИ- определяем фукнцию "onNameSelectChanged"
@@ -97,7 +82,6 @@ function DogBreedSelect() {
       (name) => name.name.first === selectedName
     );
     setSelectedName({ name: selectedName, index: selectedIndex });
-    console.log("selectedName=", selectedName, "selectedIndex=", selectedIndex);
   };
   //!!! Ниже -  обработчик handleHomeClick для отображения модального окна CATS:
   const handleHomeClick = () => {
@@ -107,7 +91,6 @@ function DogBreedSelect() {
     setShowModal(true);
   };
 
-  console.log("names=", names);
   return (
     <div className="container">
       <Navbar
@@ -121,9 +104,15 @@ function DogBreedSelect() {
             CATS
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="#home" style={{ display: "none" }}>
+              Home
+            </Nav.Link>
+            <Nav.Link href="#features" style={{ display: "none" }}>
+              Features
+            </Nav.Link>
+            <Nav.Link href="#pricing" style={{ display: "none" }}>
+              Pricing
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -217,7 +206,8 @@ function DogBreedSelect() {
           breedsImages.length > 0 && // Если выбрана порода
           breedsImages.map((breed, index) => (
             <Col xs={12} sm={6} lg={4} key={breed.id}>
-              <Card className="w-100 h-100"
+              <Card
+                className="w-100 h-100"
                 // onClick={() => handleCardClick(index)}
               >
                 <Card.Img variant="top" src={breed.url} />

@@ -4,7 +4,9 @@
 
 1. Клонируйте репозиторий:
 
-   git clone <https://github.com/deniszaveryaev/Project1/tree/Final_Project>
+   git clone <https://github.com/deniszaveryaev/Project1>
+
+   Далее нужно выбрать ветку с финальным проектом: "Final_Project"
 
 2. Перейдите в директорию проекта (в Terminal Visual Studio Code или Windows PowerShell):
 
